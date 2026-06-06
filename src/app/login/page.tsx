@@ -33,7 +33,7 @@ export default function LoginPage() {
       if (parsed && !parsed.email_verified) {
         setVerifyBanner(true)
       } else {
-        router.push('/')
+        router.push('/dashboard')
       }
     } catch (e: any) {
       setError(e.message || 'Something went wrong')
@@ -55,10 +55,10 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 bg-primary-700 rounded-xl flex items-center justify-center mx-auto mb-4">
+          <Link href="/" className="w-12 h-12 bg-primary-700 rounded-xl flex items-center justify-center mx-auto mb-4">
             <Truck className="w-7 h-7 text-white" />
-          </div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">EcoFleet UK</h1>
+          </Link>
+          <Link href="/" className="text-2xl font-bold text-gray-900 dark:text-gray-100 hover:text-primary-700 transition">EcoFleet UK</Link>
           <p className="text-sm text-gray-400 mt-1">FORS-compliant carbon reporting</p>
         </div>
 

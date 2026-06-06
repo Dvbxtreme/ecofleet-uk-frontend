@@ -6,7 +6,7 @@ import { useAuth } from '@/lib/auth'
 import Sidebar from './Sidebar'
 import { Loader2 } from 'lucide-react'
 
-const PUBLIC_PATHS = ['/login']
+const PUBLIC_PATHS = ['/', '/login', '/pricing', '/ev-calculator', '/privacy', '/terms']
 
 export default function AppShell({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth()
@@ -18,8 +18,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
     if (!user && !PUBLIC_PATHS.includes(path)) {
       router.replace('/login')
     }
-    if (user && path === '/login') {
-      router.replace('/')
+    if (user && (path === '/login' || path === '/')) {
+      router.replace('/dashboard')
     }
   }, [user, loading, path, router])
 
@@ -31,7 +31,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
     )
   }
 
-  if (!user && path !== '/login') {
+  if (!user && PUBLIC_PATHS.includes(path) && path !== '/login') {
+    return <>{children}</>
+  }
+
+  if (!user) {
     return null
   }
 
