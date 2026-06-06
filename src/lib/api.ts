@@ -215,6 +215,48 @@ export interface CompanyUser {
   is_active: boolean
 }
 
+export interface EVAnalysisResult {
+  vehicle_id: string
+  registration: string
+  vehicle_type: string
+  annual_miles: number
+  annual_fuel_cost_gbp: number
+  annual_electric_cost_gbp: number
+  total_annual_saving_gbp: number
+  co2_saving_kg_per_year: number
+  ev_price_gbp: number
+  payback_years: number
+  avg_daily_miles: number
+  suitability_score: number
+  suitable_for_ev: boolean
+  suggested_ev: { make: string; model: string; range_miles: number } | null
+  notes: string[]
+}
+
+export interface EVFleetSummary {
+  total_vehicles: number
+  suitable_for_ev: number
+  total_annual_saving_potential_gbp: number
+  total_co2_saving_potential_kg: number
+}
+
+export interface EVPlanOut {
+  id: string
+  vehicle_id: string
+  registration: string
+  vehicle_type: string
+  status: string
+  suggested_ev_make: string
+  suggested_ev_model: string
+  suggested_ev_range_miles: number
+  total_annual_saving_gbp: number
+  co2_saving_kg_per_year: number
+  ev_price_gbp: number
+  payback_years: number
+  annual_miles: number
+  suitability_score: number
+}
+
 export const api = {
   drivers: { scorecard: () => request<any[]>('/api/v1/drivers/scorecard') },
   benchmarking: { industry: () => request<any>('/api/v1/benchmarking/industry') },
@@ -321,6 +363,16 @@ export const api = {
   },
   yoy: {
     comparison: () => request<any>('/api/v1/yoy/comparison'),
+  },
+
+  ev: {
+    vehicles: () => request<EVAnalysisResult[]>('/api/v1/ev/vehicles'),
+    fleetSummary: () => request<EVFleetSummary>('/api/v1/ev/fleet-summary'),
+    plans: {
+      list: () => request<EVPlanOut[]>('/api/v1/ev/plans'),
+      create: (vehicleId: string) => request<EVPlanOut>('/api/v1/ev/plans', { method: 'POST', body: JSON.stringify({ vehicle_id: vehicleId }) }),
+      update: (planId: string, data: { status: string }) => request<EVPlanOut>(`/api/v1/ev/plans/${planId}`, { method: 'PUT', body: JSON.stringify(data) }),
+    },
   },
 
   export: {
