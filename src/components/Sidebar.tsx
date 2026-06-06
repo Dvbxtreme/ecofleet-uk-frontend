@@ -3,19 +3,18 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BarChart3, Upload, FileText, Building2, Truck, LogOut, User, CreditCard, Moon, Sun, Shield, Settings, Bell, Smartphone, Zap } from 'lucide-react'
+import { BarChart3, Upload, FileText, Building2, Truck, LogOut, User, CreditCard, Moon, Sun, Shield, Settings, Bell, Smartphone } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/lib/auth'
 import { api, SubscriptionInfo } from '@/lib/api'
 
 const links = [
-  { href: '/dashboard', label: 'Dashboard', icon: BarChart3 },
+  { href: '/', label: 'Dashboard', icon: BarChart3 },
   { href: '/upload', label: 'Upload Data', icon: Upload },
   { href: '/vehicles', label: 'Vehicles', icon: Truck },
   { href: '/reports', label: 'Reports', icon: FileText },
   { href: '/company', label: 'Company', icon: Building2 },
   { href: '/billing', label: 'Billing', icon: CreditCard },
-  { href: '/ev', label: 'EV Planner', icon: Zap },
 ]
 
 export default function Sidebar() {
@@ -59,7 +58,7 @@ export default function Sidebar() {
 
   return (
     <aside className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 min-h-screen p-6 flex flex-col shrink-0">
-      <Link href="/dashboard" className="flex items-center gap-3 mb-10">
+      <Link href="/" className="flex items-center gap-3 mb-10">
         <div className="w-9 h-9 bg-primary-700 rounded-lg flex items-center justify-center">
           <Truck className="w-5 h-5 text-white" />
         </div>
@@ -162,11 +161,10 @@ export default function Sidebar() {
           <LogOut className="w-5 h-5" />
           Sign Out
         </button>
-          <div className="px-3 pt-1 flex gap-3 text-[11px] text-gray-400 dark:text-gray-600">
-            <Link href="/pricing" className="hover:underline">Pricing</Link>
-            <Link href="/terms" className="hover:underline">Terms</Link>
-            <Link href="/privacy" className="hover:underline">Privacy</Link>
-          </div>
+        <div className="px-3 pt-1 flex gap-3 text-[11px] text-gray-400 dark:text-gray-600">
+          <a href="/terms" className="hover:underline">Terms</a>
+          <a href="/privacy" className="hover:underline">Privacy</a>
+        </div>
         <div className="px-3 pt-1">
           <div className="text-[11px] text-gray-400 dark:text-gray-600 leading-tight">
             EcoFleet UK<br />

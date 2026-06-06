@@ -1,15 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/lib/auth'
 import { Truck, Loader2, AlertCircle, MailWarning, X } from 'lucide-react'
 
 export default function LoginPage() {
   const { login, register, user, sendVerification } = useAuth()
   const router = useRouter()
-  const [mode, setMode] = useState<'login' | 'register'>('login')
+  const searchParams = useSearchParams()
+  const [mode, setMode] = useState<'login' | 'register'>(searchParams.get('tab') === 'register' ? 'register' : 'login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
@@ -34,7 +34,7 @@ export default function LoginPage() {
       if (parsed && !parsed.email_verified) {
         setVerifyBanner(true)
       } else {
-        router.push('/dashboard')
+        router.push('/')
       }
     } catch (e: any) {
       setError(e.message || 'Something went wrong')
@@ -56,10 +56,10 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/" className="w-12 h-12 bg-primary-700 rounded-xl flex items-center justify-center mx-auto mb-4">
+          <div className="w-12 h-12 bg-primary-700 rounded-xl flex items-center justify-center mx-auto mb-4">
             <Truck className="w-7 h-7 text-white" />
-          </Link>
-          <Link href="/" className="text-2xl font-bold text-gray-900 dark:text-gray-100 hover:text-primary-700 transition">EcoFleet UK</Link>
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">EcoFleet UK</h1>
           <p className="text-sm text-gray-400 mt-1">FORS-compliant carbon reporting</p>
         </div>
 
